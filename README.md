@@ -168,6 +168,24 @@ python mapping.py --genomeDir /path/to/genomeDir \
 ```
 
 
+My Run
+
+
+
+```
+
+source /home/africabp/00.apps/miniconda3/bin/activate
+
+conda activate star_env
+
+cd /home/africabp/02.analyses/01.mapping
+
+python3 mapping.py --genomeDir /home/africabp/02.analyses/01.mapping --fastaFile chr4.fasta --workDir /home/africabp/02.analyses/01.mapping/reads_trimmed/ --threads 10 &> log.txt &
+
+
+```
+
+
 
 Singularity
 
