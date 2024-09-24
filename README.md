@@ -187,6 +187,9 @@ python3 mapping.py --genomeDir /home/africabp/02.analyses/01.mapping --fastaFile
 
 
 
+
+Note: You can put just put the trimmed data in the work dir simply then
+
 Singularity
 
 ```
