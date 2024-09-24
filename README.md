@@ -133,6 +133,21 @@ if __name__ == "__main__":
 
 
 
+Run
+
+
+
+```
+python mapping.py --genomeDir /path/to/genomeDir \
+                  --fastaFile /path/to/masked.fasta \
+                  --workDir /path/to/readsDir \
+                  --threads 20
+
+
+```
+
+
+
 Singularity
 
 ```
@@ -274,5 +289,21 @@ if __name__ == "__main__":
     main()
 ```
 
+
+
+
+Run
+
+```
+
+python mapping.py --singularityImage /path/to/star.sif \
+                  --genomeDir /path/to/genomeDir \
+                  --fastaFile /path/to/masked.fasta \
+                  --workDir /path/to/readsDir \
+                  --threads 20
+
+
+
+```
 
 #Step 3: Braker annotation
