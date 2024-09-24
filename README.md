@@ -1,3 +1,66 @@
+# Step 0: Repeats
+
+
+```
+
+
+
+#!/usr/bin/env python3
+
+import os
+import argparse
+import subprocess
+
+def build_database(db, input_file):
+    print("Building database ...")
+    subprocess.run(["BuildDatabase", "-name", db, input_file], check=True)
+
+def run_repeat_modeler(db, threads):
+    print("Running RepeatModeler ...")
+    subprocess.run(["RepeatModeler", "-database", db, "-LTRStruct", "-threads", str(threads)], check=True)
+
+def run_repeat_masker(input_file, pa):
+    print("Running RepeatMasker ...")
+    subprocess.run(["RepeatMasker", "-pa", str(pa), "-gff", "-lib", "consensi.fa", input_file], check=True)
+
+def main():
+    parser = argparse.ArgumentParser(description="Script to run RepeatModeler and RepeatMasker on a genome.")
+    
+    parser.add_argument("-i", "--input", required=True, help="Input genome FASTA file")
+    parser.add_argument("-t", "--threads", type=int, default=16, help="Number of threads to use for RepeatModeler (default: 16)")
+    parser.add_argument("-p", "--pa", type=int, default=16, help="Number of processors for RepeatMasker (default: 16)")
+    parser.add_argument("-d", "--database", help="Name of the database (default: basename of input file without extension)")
+
+    args = parser.parse_args()
+
+    input_file = args.input
+    db = args.database if args.database else os.path.splitext(os.path.basename(input_file))[0]
+    threads = args.threads
+    pa = args.pa
+
+    build_database(db, input_file)
+    run_repeat_modeler(db, threads)
+
+    # Link the consensi.fa.classified file
+    consensi_file = "consensi.fa"
+    if not os.path.exists(consensi_file):
+        consensi_dir = next((d for d in os.listdir(".") if d.startswith("RM_")), None)
+        if consensi_dir:
+            os.symlink(os.path.join(consensi_dir, "consensi.fa"), consensi_file)
+        else:
+            print("Error: Could not find consensi.fa file.")
+            return
+
+    run_repeat_masker(input_file, pa)
+
+if __name__ == "__main__":
+    main()
+
+
+
+```
+
+
 # Step 1: Data trimming
 
 trim.sh
