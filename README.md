@@ -1,5 +1,26 @@
 # Step 1: Data trimming
 
+trim.sh
+
+```
+mkdir trimmed
+
+for i in *_1.fastq.gz
+
+do
+
+base=$(basename $i _1.fastq.gz)
+
+fastp --detect_adapter_for_pe \
+        --overrepresentation_analysis \
+        --correction --cut_right --thread 2 \
+        --html trimmed/${base}.fastp.html --json trimmed/${base}.fastp.json \
+        -i ${base}_1.fastq.gz -I ${base}_2.fastq.gz \
+        -o trimmed/Trimmed_${base}_1.fq.gz -O trimmed/Trimmed_${base}_2.fq.gz
+
+done
+
+```
 
 # Step 2: Mapping
 
